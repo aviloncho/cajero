@@ -1,3 +1,11 @@
+var imagenes = [];
+
+imagenes["100"] = "img/billete100.png";
+imagenes["50"] = "img/billete50.png";
+imagenes["20"] = "img/billete20.png";
+imagenes["10"] = "img/billete10.png";
+imagenes["5"] = "img/billete5.png";
+
 function Cajero()
 {
   this.billetes = [];
@@ -69,6 +77,8 @@ class Billete
   {
     this.valor = valor;
     this.cantidad = cantidad;
+    this.imagen = new Image();
+    this.imagen.src = imagenes[this.valor];
   }
 
   entregar(cantidad)
@@ -76,6 +86,7 @@ class Billete
     this.cantidad -= cantidad;
     if(this.cantidad == 0)
     {
+      msj_cajero.innerHTML += "Se me acabaron los billetes de " + this.valor + "<br />";
       console.log("Se me acabaron los billetes de " + this.valor);
     }
   }
@@ -102,10 +113,14 @@ function entregarDinero()
     {
       if(e.cantidad > 0)
       {
-        resultado.innerHTML += e.cantidad + " billetes de $" + e.valor + "<br />";
+        //resultado.innerHTML += e.cantidad + " billetes de $" + e.valor + "<br />";
+        for(var i = 1; i <= e.cantidad; i++)
+        {
+          resultado.innerHTML += "<img class='billete' src=" + e.imagen.src + " />"
+        }
       }
     }
-    resultado.innerHTML += "<strong>Total entregado: </strong>" + t.value;
+    resultado.innerHTML += "<br /><strong>Total entregado: </strong>" + t.value;
   }
 }
 
@@ -116,6 +131,7 @@ cajero.addBilletes(new Billete(20, 5));
 cajero.addBilletes(new Billete(10, 10));
 cajero.addBilletes(new Billete(5, 5));
 
+var msj_cajero = document.getElementById("msj-cajero");
 var resultado = document.getElementById("resultado");
 var b = document.getElementById("extraer");
 b.addEventListener("click", entregarDinero);

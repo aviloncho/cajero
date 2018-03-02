@@ -1,0 +1,9 @@
+#cajero {
+  display: flex;
+  justify-content: space-between;
+}
+
+.billete {
+  width: 180px;
+  padding: .1em .2em;
+}
